@@ -1,0 +1,35 @@
+# Nome do workflow de Entrega Contínua
+name: Publicar no GitHub Pages (CD)
+
+# Gatilho: Este workflow vai rodar toda vez que houver um 'push'
+# (envio de código) para o branch 'main'. Isso acontece quando um PR é 'merged'.
+on:
+  push:
+    branches: [ "main" ]
+
+# Permissões necessárias para que a ação possa publicar o site
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Tarefas que serão executadas
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+      - name: Configura o Pages
+        uses: actions/configure-pages@v4
+      - name: Gera o artefato para deploy
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Publica todo o conteúdo da pasta raiz
+          path: '.'
+      - name: Faz o deploy no GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
