@@ -1,13 +1,10 @@
 main {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 24px;
-    padding-block: 24px;
-    
-}
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(286px, 1fr));
+  gap: 24px;
+  padding-block: 24px;
 
-main img {
-    width: 286px;
-    height: 286px;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: 32px;
 }
