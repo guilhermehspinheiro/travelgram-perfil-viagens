@@ -1,9 +1,10 @@
 footer {
-    display: flex;
-    padding-block: 24px;
-    gap: 24px;
+  display: flex;
+  padding-block: 48px; 
+  margin-top: 48px;    
+  gap: 32px;           
+  border-top: 1px solid var(--surface-color); 
 }
-
 footer span:nth-child(1) {
     margin-right: auto;
 }
