@@ -1,0 +1,34 @@
+# Nome do workflow de Integração Contínua
+name: Verificador de Qualidade do Código (CI)
+
+# Gatilho: Este workflow vai rodar toda vez que um Pull Request
+# for aberto ou atualizado para o branch 'main'
+on:
+  pull_request:
+    branches: [ "main" ]
+
+# Tarefas que serão executadas
+jobs:
+  # Nome do job: linter
+  linter:
+    name: Super-Linter
+    # A máquina virtual onde o job vai rodar
+    runs-on: ubuntu-latest
+
+    # Passos do job
+    steps:
+      # 1. Baixa uma cópia do seu código para a máquina virtual
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      # 2. Roda a ação Super-Linter, que é da própria GitHub.
+      # Ela verifica automaticamente a qualidade de diversos tipos de arquivos.
+      - name: Executa o Super-Linter
+        uses: github/super-linter@v5
+        env:
+          # Variável para dizer ao Linter para validar arquivos HTML
+          VALIDATE_HTML: true
+          # Variável para dizer ao Linter para validar arquivos CSS
+          VALIDATE_CSS: true
+          # Obrigatório para a ação funcionar corretamente
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
