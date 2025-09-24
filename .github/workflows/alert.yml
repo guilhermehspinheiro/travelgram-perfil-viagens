@@ -17,5 +17,4 @@ jobs:
 
           content: "🚀 **Novo push no branch `main`!**\nO commit `${{ github.sha }}` foi enviado por **${{ github.actor }}**.\n\nVeja as alterações aqui: ${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}"
 
-          content: "🚀 **Novo push no branch `main`!**\nO commit `${{ github.sha }}` foi enviado por **${{ github.actor }}**.\n\nVeja as alterações aqui: ${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}"
 
