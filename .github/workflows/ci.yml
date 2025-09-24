@@ -1,34 +1,41 @@
-# Nome do workflow de Integração Contínua
-name: Verificador de Qualidade do Código (CI)
+# Nome do workflow, agora incluindo os testes
+name: Verificador de Qualidade e Testes (CI)
 
-# Gatilho: Este workflow vai rodar toda vez que um Pull Request
-# for aberto ou atualizado para o branch 'main'
+# Gatilho: Roda em todo Pull Request para o branch 'main'
 on:
   pull_request:
     branches: [ "main" ]
 
-# Tarefas que serão executadas
+# Tarefas
 jobs:
-  # Nome do job: linter
-  linter:
-    name: Super-Linter
-    # A máquina virtual onde o job vai rodar
+  # Nomeamos o job para ser mais descritivo
+  build-and-test:
+    name: Roda Linter e Testes Unitários
     runs-on: ubuntu-latest
 
-    # Passos do job
     steps:
-      # 1. Baixa uma cópia do seu código para a máquina virtual
+      # 1. Baixa uma cópia do seu código
       - name: Checkout do código
         uses: actions/checkout@v4
 
-      # 2. Roda a ação Super-Linter, que é da própria GitHub.
-      # Ela verifica automaticamente a qualidade de diversos tipos de arquivos.
+      # 2. Configura o ambiente Node.js na máquina virtual do GitHub
+      - name: Configura o Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' # Usamos uma versão LTS do Node
+
+      # 3. Instala as dependências do projeto (o Jest)
+      - name: Instala as dependências
+        run: npm install
+
+      # 4. Roda os testes unitários
+      - name: Roda os testes unitários (Jest)
+        run: npm test
+
+      # 5. Roda o Super-Linter (o passo que já existia)
       - name: Executa o Super-Linter
         uses: github/super-linter@v5
         env:
-          # Variável para dizer ao Linter para validar arquivos HTML
           VALIDATE_HTML: true
-          # Variável para dizer ao Linter para validar arquivos CSS
           VALIDATE_CSS: true
-          # Obrigatório para a ação funcionar corretamente
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
