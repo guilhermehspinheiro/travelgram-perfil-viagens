@@ -1,0 +1,24 @@
+# Nome do workflow
+name: Alerta para o Discord
+
+# Gatilho: Roda toda vez que houver um push no branch main
+on:
+  push:
+    branches:
+      - "main"
+
+# Tarefas
+jobs:
+  enviar_alerta:
+    name: Enviar Alerta para o Discord
+    runs-on: ubuntu-latest
+    steps:
+      # Ação da comunidade que envia a mensagem para o Discord
+      - name: Envia a notificação
+        uses: avast/discord-action@v0
+        with:
+          # Usa o segredo que configuramos no cofre do GitHub
+          webhook: ${{ secrets.DISCORD_WEBHOOK_URL }}
+
+          # Mensagem que será enviada. Usamos variáveis do GitHub para deixá-la dinâmica!
+          message: "🚀 **Novo push no branch `main`!**\nO commit `${{ github.sha }}` foi enviado por **${{ github.actor }}**.\n\nVeja as alterações aqui: ${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}"
