@@ -14,5 +14,5 @@ jobs:
         # AÇÃO CORRIGIDA E SEUS PARÂMETROS:
         uses: tsickert/discord-webhook@v5.3.0
         with:
-          webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          webhook-url: ${{ secrets.DISCORD_WEBHOOK_URL }}
           content: "🚀 **Novo push no branch `main`!**\nO commit `${{ github.sha }}` foi enviado por **${{ github.actor }}**.\n\nVeja as alterações aqui: ${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}"
